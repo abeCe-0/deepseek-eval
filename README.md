@@ -38,6 +38,18 @@
 - **规则处理不了语义判断**（如"答非所问"需要理解上下文）
 - **结论**：真实评估需要"规则粗筛 + 人工精判"
 
+## Agent Demo
+
+`agent_demo.py` 是一个基于 LangGraph 的 ReAct Agent：
+- 工具 1：`search_pdf`，从 PDF 检索相关内容（RAG）
+- 工具 2：`get_weather`，查询城市天气（模拟数据）
+- Agent 根据用户问题自主决定调用哪个工具
+
+测试：
+- 问"什么是 RAG" → 调 search_pdf
+- 问"北京天气" → 调 get_weather
+- 问"晚饭吃什么" → 两个工具都不调
+
 ## 使用方法
 
 1. 安装依赖：pip install openai pandas python-dotenv
