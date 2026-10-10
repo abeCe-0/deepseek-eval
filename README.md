@@ -49,6 +49,16 @@
 - 问"什么是 RAG" → 调 search_pdf
 - 问"北京天气" → 调 get_weather
 - 问"晚饭吃什么" → 两个工具都不调
+## API 接口
+
+`api_agent.py` 用 FastAPI 把 Agent 封装成 REST API：
+- `GET /health`：健康检查
+- `POST /ask`：接收问题，返回 Agent 回答
+
+启动方式：
+```bash
+uvicorn api_agent:app --reload 
+```
 
 ## 使用方法
 

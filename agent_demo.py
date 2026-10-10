@@ -6,6 +6,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.tools import tool
 from langchain_core.messages import HumanMessage
 from langgraph.prebuilt import create_react_agent
+import requests
 from dotenv import load_dotenv
 import os
 
@@ -36,12 +37,16 @@ def search_pdf(query: str) -> str:
 @tool
 def get_weather(city: str) -> str:
     """当用户问某个城市的天气时，用这个工具。"""
-    fake_weather = {
-        "北京": "晴，25°C，微风",
-        "上海": "多云，28°C，湿度 70%",
-        "杭州": "小雨，22°C，东南风 3 级",
-    }
-    return fake_weather.get(city, f"暂时查不到 {city} 的天气")
+    # 把中文城市名转成拼音/英文，wttr.in 支持中文和拼音
+    url = f"https://wttr.in/{city}?format=3&lang=zh"
+    try:
+        resp = requests.get(url, timeout=5)
+        if resp.status_code == 200:
+            return resp.text.strip()
+        else:
+            return f"查询失败，状态码：{resp.status_code}"
+    except Exception as e:
+        return f"查天气出错：{e}"
 
 # ========== 4. 把两个工具交给模型 ==========
 tools = [search_pdf, get_weather]
