@@ -13,7 +13,7 @@ client = OpenAI(
     base_url="https://api.deepseek.com/v1"
 )
 
-# 2. 准备一批测试问题（这就是的“评测集
+# 2. 准备一批测试问题（这就是评测集
 questions = [
     "1+1等于几？",
     "中国的首都是哪里？",

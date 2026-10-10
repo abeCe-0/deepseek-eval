@@ -8,7 +8,7 @@ from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 import os
 
-os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"#直接用本地缓存
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 load_dotenv(r"D:\python\.env")
@@ -17,7 +17,7 @@ loader = PyPDFLoader("RAG_demo.pdf")
 docs = loader.load()
 print(f"PDF 共 {len(docs)} 页")
 
-splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
+splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=50)#最多块大小和重叠大小
 chunks = splitter.split_documents(docs)
 print(f"切成 {len(chunks)} 块")
 
@@ -33,7 +33,7 @@ llm = ChatOpenAI(
     model="deepseek-chat",
     api_key=os.getenv("DEEPSEEK_API_KEY"),
     base_url="https://api.deepseek.com/v1",
-    temperature=0
+    temperature=0#输出随机性，0代表一定可复现
 )
 
 prompt = ChatPromptTemplate.from_template("""
